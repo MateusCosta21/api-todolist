@@ -25,6 +25,7 @@ class UpdateTaskStatusRequest extends FormRequest
     {
         return [
             'status' => 'required|in:pending,completed',
+            'user_id' => auth()->id(),
         ];
     }
 }

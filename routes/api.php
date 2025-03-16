@@ -45,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
             ->name('task.update');
         Route::patch('/{id}/status', [TaskController::class, 'updateStatus'])
             ->name('task.status');
+        Route::delete('/{id}', [TaskController::class, 'destroy'])
+            ->name('task.destroy');
+
 
     });
 });

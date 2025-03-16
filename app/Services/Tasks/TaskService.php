@@ -45,5 +45,21 @@ class TaskService
         DB::commit();
         return $this->repository->update($task->id, $data);
     }
+
+    public function deleteTask(string $id): void
+    {
+        DB::beginTransaction();
+
+        $task = $this->repository->getById($id);
+
+        if(!$task){
+            DB::rollBack();
+            throw new Exception("O id não existe");
+        }
+
+        $task->delete();
+
+        DB::commit();
+    }
     
 }

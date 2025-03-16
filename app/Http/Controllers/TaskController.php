@@ -9,6 +9,7 @@ use App\Http\Resources\TaskResource;
 use App\Services\Tasks\TaskService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Helpers\ResponseAPI;
 
 
 class TaskController extends Controller
@@ -22,7 +23,11 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request)
     {
-        $task = $this->service->storeTask($request->validated());
+        $validatedData = $request->validated();
+        $validatedData['user_id'] = auth()->id(); 
+
+        $task = $this->service->storeTask($validatedData);
+
         return (new TaskResource($task))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -39,5 +44,11 @@ class TaskController extends Controller
         return (new TaskResource($task))
         ->response()
         ->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function destroy(string $id)
+    {
+        $this->service->deleteTask($id);
+        return response()->noContent();
     }
 }
