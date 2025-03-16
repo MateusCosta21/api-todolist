@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\UpdateTaskStatusRequest;
 use App\Http\Resources\TaskResource;
 use App\Services\Tasks\TaskService;
 use Illuminate\Http\Request;
@@ -29,6 +30,13 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, int $id){
         $task = $this->service->updateTask($id, $request->all());
         return(new TaskResource($task))
+        ->response()
+        ->setStatusCode(Response::HTTP_OK);
+    }
+    public function updateStatus(UpdateTaskStatusRequest $request, $id)
+    {
+        $task = $this->service->updateTaskStatus($id, $request->validated());
+        return (new TaskResource($task))
         ->response()
         ->setStatusCode(Response::HTTP_OK);
     }

@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('task.store');
         Route::put('/{id}/update', [TaskController::class, 'update'])
             ->name('task.update');
+        Route::patch('/{id}/status', [TaskController::class, 'updateStatus'])
+            ->name('task.status');
 
     });
 });

@@ -33,7 +33,17 @@ class TaskService
         }
         DB::commit();
         return $this->repository->update($task->id, $data);
-
     }
 
+    public function updateTaskStatus($id, array $data){
+        DB::beginTransaction();
+        $task = $this->repository->getById($id);
+        if(!$task){
+            DB::rollBack();
+            throw new Exception("O id não existe");
+        }
+        DB::commit();
+        return $this->repository->update($task->id, $data);
+    }
+    
 }
