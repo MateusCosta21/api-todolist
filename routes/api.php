@@ -39,6 +39,8 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'list'])
+        ->name('task.index');
         Route::post('/create', [TaskController::class, 'store'])
             ->name('task.store');
         Route::put('/{id}/update', [TaskController::class, 'update'])

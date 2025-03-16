@@ -3,6 +3,7 @@
 namespace App\Services\Tasks;
 
 use App\Repositories\TaskRepository;
+use App\Services\Tasks\Dto\ListTaskDto;
 use Exception;
 
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,12 @@ class TaskService
         $this->repository = $repository;
     }
 
-    
+    public function listTasks(ListTaskDto $dto)
+    {
+        return $this->repository->getPaginate($dto);
+    }
+
+
     public function storeTask(array $data)
     {
         DB::beginTransaction();
