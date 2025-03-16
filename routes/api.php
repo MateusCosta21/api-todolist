@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('task.status');
         Route::delete('/{id}', [TaskController::class, 'destroy'])
             ->name('task.destroy');
+        Route::get('/{id}', [TaskController::class, 'show'])
+            ->name('task.show');
 
 
     });

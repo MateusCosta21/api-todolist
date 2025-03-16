@@ -37,6 +37,16 @@ class TaskController extends Controller
         return TaskResource::collection($paginatedFolders);
     }
 
+    public function show(string $id)
+    {
+
+        $task = $this->service->getTaskById($id);
+
+        return (new TaskResource($task))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
+    }
+
     public function store(StoreTaskRequest $request)
     {
         $validatedData = $request->validated();

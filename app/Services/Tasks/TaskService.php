@@ -30,6 +30,15 @@ class TaskService
         return $task;
     }
 
+    public function getTaskById(string $id){
+        $task = $this->repository->getById($id);
+        if(!$task){
+            DB::rollBack();
+            throw new Exception("O id não existe");
+        }
+        return $task;
+    }
+
     public function updateTask($id, array $data){
         DB::beginTransaction();
         $task = $this->repository->getById($id);
