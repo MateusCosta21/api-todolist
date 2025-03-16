@@ -12,7 +12,7 @@ Este é o backend da aplicação, construído em Laravel. Ele expõe uma API RES
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/MateusCosta21/api-todo.git
+   git clone https://github.com/MateusCosta21/app-todo.git
    cd api-todo
 
 2. Execute o script para inicializar o ambiente de desenvolvimento:
