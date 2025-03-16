@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,25 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+});
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('/tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'list'])
+        ->name('task.index');
+        Route::post('/create', [TaskController::class, 'store'])
+            ->name('task.store');
+        Route::put('/{id}/update', [TaskController::class, 'update'])
+            ->name('task.update');
+        Route::patch('/{id}/status', [TaskController::class, 'updateStatus'])
+            ->name('task.status');
+        Route::delete('/{id}', [TaskController::class, 'destroy'])
+            ->name('task.destroy');
+        Route::get('/{id}', [TaskController::class, 'show'])
+            ->name('task.show');
+
+
+    });
 });
