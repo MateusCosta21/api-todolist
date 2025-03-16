@@ -41,5 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/tasks')->group(function () {
         Route::post('/create', [TaskController::class, 'store'])
             ->name('task.store');
+        Route::put('/{id}/update', [TaskController::class, 'update'])
+            ->name('task.update');
+
     });
 });

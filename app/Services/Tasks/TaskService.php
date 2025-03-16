@@ -19,9 +19,21 @@ class TaskService
     public function storeTask(array $data)
     {
         DB::beginTransaction();
-        $meeting = $this->repository->create($data);
+        $task = $this->repository->create($data);
         DB::commit();
-        return $meeting;
+        return $task;
+    }
+
+    public function updateTask($id, array $data){
+        DB::beginTransaction();
+        $task = $this->repository->getById($id);
+        if(!$task){
+            DB::rollBack();
+            throw new Exception("O id não existe");
+        }
+        DB::commit();
+        return $this->repository->update($task->id, $data);
+
     }
 
 }

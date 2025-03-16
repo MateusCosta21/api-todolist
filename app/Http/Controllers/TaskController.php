@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Services\Tasks\TaskService;
 use Illuminate\Http\Request;
@@ -24,5 +25,11 @@ class TaskController extends Controller
         return (new TaskResource($task))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
+    }
+    public function update(UpdateTaskRequest $request, int $id){
+        $task = $this->service->updateTask($id, $request->all());
+        return(new TaskResource($task))
+        ->response()
+        ->setStatusCode(Response::HTTP_OK);
     }
 }
