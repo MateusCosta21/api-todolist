@@ -13,7 +13,7 @@ Este é o backend da aplicação, construído em Laravel. Ele expõe uma API RES
 
    ```bash
    git clone https://github.com/MateusCosta21/api-todolist.git
-   cd api-todo
+   cd api-todolist
 
 2. Execute o script para inicializar o ambiente de desenvolvimento:
       ```bash
