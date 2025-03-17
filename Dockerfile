@@ -1,27 +1,26 @@
 FROM php:7.4-fpm
 
-# Instalar pacotes necessários
 RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    zip unzip git curl \
-    && docker-php-ext-install pdo pdo_pgsql
+    supervisor \
+    curl \
+    unzip \
+    libzip-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libpq-dev \ 
+    && docker-php-ext-install zip pdo_pgsql mbstring exif pcntl bcmath gd
 
 # Instalar Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Definir diretório de trabalho
-WORKDIR /var/www
+WORKDIR /var/www/html
 
-# Copiar os arquivos do projeto para o container
-COPY . /var/www
+COPY ./docker/start-container /usr/local/bin/start-container
+COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./docker/php.ini /etc/php/7.4/cli/conf.d/php-Laravel.ini
+RUN chmod +x /usr/local/bin/start-container
 
-# Definir permissões corretas para o armazenamento e cache do Laravel
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
-# Instalar dependências do Laravel
-RUN composer install --no-dev --optimize-autoloader
-
-# Expor a porta do PHP-FPM
-EXPOSE 9000
-
-CMD ["php-fpm"]
+ENTRYPOINT [ "start-container" ]
+# CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

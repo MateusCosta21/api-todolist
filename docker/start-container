@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Instalar dependências do Laravel
+composer install --no-dev --optimize-autoloader
+
+# Definir permissões corretas para o armazenamento e cache do Laravel
+chown -R www-data:www-data /var/www/html/*
+
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
